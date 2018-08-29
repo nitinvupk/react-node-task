@@ -1,0 +1,1 @@
+export const listUser = payload => ({ type:"LIST_USERS", payload });
