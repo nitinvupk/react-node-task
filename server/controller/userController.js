@@ -27,7 +27,7 @@ router.post('/register', function(req,res) {
       User.findByIdAndUpdate({_id: user._id }, {$push: { loginToken: token }}, function(err, result) {
         if(err) console.log(err);
       });
-      res.send({auth: true, token: token});
+      res.send({auth: true, token: token, currentUser:user});
     });
 });
 
@@ -103,15 +103,23 @@ router.delete('/:id',verifyToken, function(req, res, next) {
 });
 
 router.post('/login', function(req, res) {
-  User.findOne({ email: req.body.email }, function(err, user) {
-    if(err) res.send({auth: false, message: "error while finding the user."});
-    if(!user) res.send({auth: false, message: "no user was found."});
+  if((!req.body.email || req.body.email !== "") && (!req.body.password || req.body.password !== "")){
+    User.findOne({ email: req.body.email }, function(err, user) {
+      if(err) res.send({auth: false, message: "error while finding the user."});
+      if(!user){ 
+        res.send({auth: false, message: "no user was found."});
+        return
+      }
 
-    const passwordIsValid = bcrypt.compareSync(req.body.password,user.password);
-    if(!passwordIsValid) res.send({auth: false, message: "Username or password incorrect"});
-    const token = jwt.sign({ id: user._id }, config.secret, {expiresIn: 86400});
-    res.send({auth: true, token: token , role:user.role});
-  });
+      const passwordIsValid = bcrypt.compareSync(req.body.password,user.password);
+      if(!passwordIsValid) res.send({auth: false, message: "Username or password incorrect"});
+      const token = jwt.sign({ id: user._id }, config.secret, {expiresIn: 86400});
+      res.send({auth: true, token: token , currentUser:user});
+    });
+  }
+  else{
+    res.send({auth: false, message: "please provide the credentials."});
+  }
 });
 
 router.get('/filter/:data', function(req, res) {
@@ -119,6 +127,14 @@ router.get('/filter/:data', function(req, res) {
     if(err) console.log(err);
     res.send({user,success:true});
   });
+})
+
+router.get('/getuser/:id',verifyToken, async function(req, res,next){
+  if(req.params.id === "currentUser"){
+    const user = await User.findOne({_id:req.userId});
+    console.log(user);
+    res.send({auth: true, currentUser:user});
+  }
 })
 
 router.get('/logout', function(req, res) {
