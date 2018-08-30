@@ -3,7 +3,7 @@ import { currentUser } from '../actions'
 import  User from '../components/user'
 
 const mapDispatchToProps = {
-    currentUser,
+  currentUser,
 };
 
 export default connect(

@@ -7,8 +7,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    listUser,
-    currentUser,
+  listUser,
+  currentUser,
 };
 
 export default connect(
