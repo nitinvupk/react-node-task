@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { listUser } from '../actions'
+import { listUser,currentUser } from '../actions'
 import AdminPanel from '../components/AdminPanel'
 
 const mapStateToProps = state => ({
@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     listUser,
+    currentUser,
 };
 
 export default connect(

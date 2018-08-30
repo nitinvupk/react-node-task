@@ -14,7 +14,7 @@ class Login extends React.Component {
     let email = this.refs.email.value; 
     let password = this.refs.password.value;
     const user = await api.create("/users/login",{ email, password });
-    debugger;
+
     if(user && user.auth){
       window.localStorage.clear();
       window.localStorage.setItem("token", user.token);

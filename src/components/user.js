@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import api from "../utility/query"
 
 class User extends React.Component {
   constructor(props){
@@ -7,14 +7,10 @@ class User extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleLogout(e){
-    axios.get("http://localhost:8000/users/logout")
-    .then((res) => {
-      if(res.data.auth === false){
-        window.localStorage.clear();
-        this.props.history.push("/login");
-      }
-    })
+  async handleLogout(e){
+    const logout = await api.logout("/users/logout");
+    this.props.currentUser({auth: true,currentUser: {}});
+    if(!logout.auth) this.props.history.push("/login");
 
   }
 
