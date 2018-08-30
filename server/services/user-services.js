@@ -4,6 +4,7 @@ const User = require('../userModel/userSchema');
 const config = require('../config');
 
 exports.registerUser = async (req, res) => {
+  console.log(req.body);
   try {
     if(!req.body.name){
       res.send({auth:false , message: "Name is required."});

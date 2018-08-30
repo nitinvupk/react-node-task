@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-const User = require('../userModel/userSchema');
-const config = require('../config');
 const verifyToken = require('./verifyToken');
 
 const userServices = require('../services/user-services'); 
