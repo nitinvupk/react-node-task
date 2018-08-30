@@ -27,7 +27,7 @@ class Login extends React.Component {
     return(
       <div className="container">
         <h1>Login</h1><br/>
-        {!this.props.user.error ? "" :<p className="text-danger">{this.props.user.error}</p>}
+        {!this.props.user.message ? "" :<p className="text-danger">{this.props.user.message}</p>}
         <label><b>Email</b></label>
         <input type="text" ref="email" placeholder="Enter Email" name="email" required/>
 
