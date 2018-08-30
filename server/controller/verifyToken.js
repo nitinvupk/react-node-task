@@ -8,7 +8,7 @@ function verifyToken(req, res, next) {
   if(!token) return res.send({auth: false, message: "no token provided"});
 
   jwt.verify(token, config.secret, function(err, decoded) {
-    if(err) res.send({auth: false, message: "token authentication failed"});
+    if(err) return res.send({auth: false, message: "token authentication failed"});
     
     req.userId = decoded.id;
     next();

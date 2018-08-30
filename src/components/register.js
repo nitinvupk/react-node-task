@@ -29,6 +29,7 @@ class Register extends React.Component {
           <h1>Register</h1>
           <p>Please fill in this form to create an account.</p>
 
+          {!this.props.user.error ? "" :<p className="text-danger">{this.props.user.error}</p>}
           <label><b>Name</b></label>
           <input type="text" ref="name" placeholder="Enter your name" name="name" required/>
 

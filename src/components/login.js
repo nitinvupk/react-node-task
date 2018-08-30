@@ -18,16 +18,16 @@ class Login extends React.Component {
     if(user && user.auth){
       window.localStorage.clear();
       window.localStorage.setItem("token", user.token);
-      this.props.currentUser(user);
       this.props.history.push("/");
     }
+    this.props.currentUser(user);
   }
   
   render() {
     return(
       <div className="container">
-        <h1>Login</h1>
-  
+        <h1>Login</h1><br/>
+        {!this.props.user.error ? "" :<p className="text-danger">{this.props.user.error}</p>}
         <label><b>Email</b></label>
         <input type="text" ref="email" placeholder="Enter Email" name="email" required/>
 

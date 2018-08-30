@@ -10,8 +10,10 @@ import './styles/index.css'
 class App extends Component {
 
   async componentWillMount () {
-    const user = await api.get("/users/getuser/currentUser");
-    this.props.currentUser(user);
+    if(window.localStorage.getItem("token")){
+      const user = await api.get("/users/getuser/currentUser");
+      this.props.currentUser(user);
+    }
   }
   
   render() {

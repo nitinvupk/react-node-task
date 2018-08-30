@@ -5,6 +5,18 @@ const config = require('../config');
 
 exports.registerUser = async (req, res) => {
   try {
+    if(!req.body.name){
+      res.send({auth:false , message: "Name is required."});
+      return
+    }
+    if(!req.body.email){
+      res.send({auth:false , message: "Email is required."});
+      return
+    }
+    if(!req.body.password){
+      res.send({auth:false , message: "Password is required."});
+      return
+    }
     const hashedPass = bcrypt.hashSync(req.body.password,8);
     const user = await User.create({
       name: req.body.name,
@@ -101,7 +113,7 @@ exports.deleteUser = async (req, res, next) => {
 
 exports.loginUsers = async (req, res) => {
   try{
-    if((!req.body.email || req.body.email !== "") && (!req.body.password || req.body.password !== "")){
+    if((req.body.email) && (req.body.password)){
       const user = await User.findOne({ email: req.body.email });
       if(!user){ 
         res.send({auth: false, message: "no user was found."});
