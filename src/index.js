@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import rootReducer from './reducers'
-import App from './components';
-import './index.css';
+import App from './containers/app'
+import './index.css'
 
 const store = createStore(rootReducer);
 

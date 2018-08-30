@@ -37,8 +37,8 @@ class usersList extends React.Component {
           {this.props.users.map((user) =>(
             <tr>
               <td align="center">
-                <a onClick={this.props.handleEdit} className="btn btn-default">Edit</a>
-                <a onClick={this.props.handleDelete} className="btn btn-danger">delete</a>
+                <a id={user._id} onClick={this.props.handleEdit} className="btn btn-default">Edit</a>
+                <a id={user._id} onClick={this.props.handleDelete} className="btn btn-danger">delete</a>
               </td>
               <td>{user.name}</td>
               <td>{user.email}</td>

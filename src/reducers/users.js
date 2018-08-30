@@ -4,7 +4,6 @@ const users = (state = [], action) => {
     case "LIST_USERS":
     if (!action.payload.success) return state;
       return action.payload.user;
-    break;
     default:
       return state
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import api from  "../utility/query"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './styles/register.css';
 
@@ -10,31 +10,16 @@ class Register extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e){
+  async handleSubmit(e){
     let name = this.refs.name.value;
     let email = this.refs.email.value;
     let password = this.refs.password.value;
     let role = this.refs.roles.value;
-    axios.post("http://localhost:8000/users/register",
-    {
-      name: name,
-      email: email,
-      password: password,
-      role: role
-    })
-    .then((res) =>{
-      if(res.data.auth && res.data.token){
-        window.localStorage.clear();
-        window.localStorage.setItem("token", res.data.token);
-        if(role === "admin"){
-          this.props.history.push("/admin");
-        }
-        else{
-          this.props.history.push("/user");
-        }
-      }
-    })
-    .catch()
+    const user = await api.create("/users/register", { name, email, password, role })
+    this.props.currentUser(user);
+    window.localStorage.clear();
+    window.localStorage.setItem("token", user.token);
+    this.props.history.push("/");
   }
 
   render(){

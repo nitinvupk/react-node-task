@@ -1,6 +1,6 @@
-import React from "react";
-import axios from "axios";
-import './styles/login.css';
+import React from "react"
+import api from  "../utility/query"
+import './styles/login.css'
 
 class Login extends React.Component {
 
@@ -8,27 +8,19 @@ class Login extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit(){
+
+  async handleSubmit(){
    
     let email = this.refs.email.value; 
     let password = this.refs.password.value;
-    axios.post("http://localhost:8000/users/login",{
-      email: email,
-      password: password
-    })
-    .then((res) =>{
-      if(res.data.auth && res.data.token){
-        window.localStorage.clear();
-        window.localStorage.setItem("token", res.data.token);
-        if(res.role === "admin"){
-          this.props.history.push("/admin");
-        }
-        else{
-          this.props.history.push("/user");
-        }
-      }
-    })
-    .catch()
+    const user = await api.create("/users/login",{ email, password });
+    debugger;
+    if(user && user.auth){
+      window.localStorage.clear();
+      window.localStorage.setItem("token", user.token);
+      this.props.currentUser(user);
+      this.props.history.push("/");
+    }
   }
   
   render() {

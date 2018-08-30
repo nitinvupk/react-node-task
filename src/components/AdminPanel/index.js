@@ -17,6 +17,7 @@ class AdminPanel extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
 
@@ -31,7 +32,12 @@ class AdminPanel extends React.Component {
 
   handleEdit(e){
     const updateUser = this.props.users.find(u => u._id === e.target.id);
-    this.setState(prevState => ({ ...prevState, showEditUser:  !prevState.showEditUser, updateUser}))
+    this.setState(prevState => ({
+      ...prevState,
+      showEditUser:  !prevState.showEditUser,
+      updateUser, 
+      showCreateNewUser: false})
+    )
   }
 
   async handleDelete(e){
@@ -40,16 +46,17 @@ class AdminPanel extends React.Component {
     this.props.listUser(users);
   }
 
-  handleLogout(e){
-    const logout = api.logout("/users/logout");
+  async handleLogout(e){
+    const logout = await api.logout("/users/logout");
     if(!logout.auth) this.props.history.push("/login");
   }
 
   handleCreate(e){
-    this.setState(prevState => ({ ...prevState, showCreateNewUser:  !prevState.showCreateNewUser}))
+    this.setState(prevState => ({ ...prevState, showCreateNewUser:  !prevState.showCreateNewUser, showEditUser: false}))
   }
 
   render(){
+    const showListUsers = !this.state.showCreateNewUser && !this.state.showEditUser;
     return(
       <div className="container">
         <div className="row">
@@ -68,13 +75,13 @@ class AdminPanel extends React.Component {
                 </div>
               </div>
               <div className="panel-body">
-                { !this.state.showCreateNewUser && !this.state.showEditUser && <UsersList {...this.props} listUser={this.props.listUser} users={this.state.pageUsers} handleDelete={this.handleDelete} handleEdit={this.handleEdit} /> }
+                {  showListUsers && <UsersList {...this.props} listUser={this.props.listUser} users={this.state.pageUsers} handleDelete={this.handleDelete} handleEdit={this.handleEdit} /> }
                 {  this.state.showCreateNewUser && <UserDetailsForm createUser listUser={this.props.listUser}/> }
                 {  this.state.showEditUser && <UserDetailsForm editUser listUser={this.props.listUser} user={this.state.updateUser}/> }
               </div>
             </div>
           </div>
-          <Pagination items={this.props.users} onChangePage={this.onChangePage}/>
+          {showListUsers && <Pagination items={this.props.users} onChangePage={this.onChangePage}/>}
         </div>
       </div>
     );
