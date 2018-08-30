@@ -14,7 +14,7 @@ Getting Started
 *Assuming that Node is already installed on your PC.
 
 To get the project running on your PC you have to first get the clone:
-url:
+url: https://github.com/nitinvupk/react-node-task.git
 
 Then you have to do "npm install" inside the project directory.
 
