@@ -9,22 +9,19 @@ const get = (url) => {
 
 const put = (url,user) => {
   return axios.put(`${baseUrl}${url}`,user,{ headers:{"x-access-token": window.localStorage.getItem("token")}})
-    .then(res =>{ console.log(res.data); 
-      return res.data})
+    .then(res => res.data )
     .catch(err => console.log(err));
 }
 
 const remove = (url) => {
   return axios.delete(`${baseUrl}${url}`,{ headers:{"x-access-token": window.localStorage.getItem("token")}})
-    .then(res =>{ console.log(res.data); 
-      return res.data})
+    .then(res => res.data )
     .catch(err => console.log(err));
 }
 
 const create = (url,user) => {
   return axios.post(`${baseUrl}${url}`,user,{ headers:{"x-access-token": window.localStorage.getItem("token")}})
-    .then(res =>{ console.log(res.data); 
-      return res.data})
+    .then(res => res.data )
     .catch(err => console.log(err));
 }
 
@@ -40,10 +37,7 @@ const logout = (url) => {
 
 const filter = (url) => {
   return axios.get(`${baseUrl}${url}`)
-  .then((res) => {
-    console.log(res.data);
-    return res.data;
-  })
+  .then((res) => res.data )
 }
 
-export default {get,put,remove,create,logout,filter}
+export default { get, put, remove, create, logout, filter }
