@@ -17,11 +17,13 @@ class Register extends React.Component {
     let role = this.refs.roles.value;
     const user = await api.create("/users/register", { name, email, password, role })
     this.props.currentUser(user);
-    window.localStorage.clear();
-    window.localStorage.setItem("token", user.token);
-    this.props.history.push("/");
+    if(user && user.auth){
+      window.localStorage.clear();
+      window.localStorage.setItem("token", user.token);
+      this.props.history.push("/");
+    }
   }
-
+  
   render(){
     return(
       <div>
