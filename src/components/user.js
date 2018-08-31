@@ -8,7 +8,7 @@ class User extends React.Component {
   }
 
   async handleLogout(e){
-    const logout = await api.logout("/users/logout");
+    const logout = await api.get("/users/logout");
     this.props.currentUser({auth: true,currentUser: {}});
     if(!logout.auth) this.props.history.push("/login");
 

@@ -47,7 +47,7 @@ class AdminPanel extends React.Component {
   }
 
   async handleLogout(e){
-    const logout = await api.logout("/users/logout");
+    const logout = await api.get("/users/logout");
     this.props.currentUser({auth: true,currentUser: {}});
     if(!logout.auth) this.props.history.push("/login");
   }
@@ -79,10 +79,10 @@ class AdminPanel extends React.Component {
                 {  showListUsers && <UsersList {...this.props} listUser={this.props.listUser} users={this.state.pageUsers} handleDelete={this.handleDelete} handleEdit={this.handleEdit} /> }
                 {  this.state.showCreateNewUser && <UserDetailsForm createUser listUser={this.props.listUser}/> }
                 {  this.state.showEditUser && <UserDetailsForm editUser listUser={this.props.listUser} user={this.state.updateUser}/> }
+                { showListUsers && <Pagination items={this.props.users} onChangePage={this.onChangePage }/>}
               </div>
             </div>
           </div>
-          {showListUsers && <Pagination items={this.props.users} onChangePage={this.onChangePage}/>}
         </div>
       </div>
     );

@@ -13,8 +13,6 @@ router.post('/register', userServices.registerUser);
 
 router.get('/',verifyToken, userServices.getUsers);
 
-router.post('/create', userServices.createUser);
-
 router.put('/:id',verifyToken, userServices.updateUser);
 
 router.delete('/:id',verifyToken, userServices.deleteUser);

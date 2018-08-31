@@ -11,7 +11,7 @@ class usersList extends React.Component {
   async handleFilter(e){
     let users;
     if(e.target.value !== ""){
-      users = await api.filter(`/users/filter/${e.target.value}`);
+      users = await api.get(`/users/filter/${e.target.value}`);
     }
     else{
       users = await api.get("/users/");
@@ -46,18 +46,6 @@ class usersList extends React.Component {
           ))}
         </tbody>
         </table>
-      </div>
-      <div className="panel-footer">
-        <div className="row">
-          <div className="col col-xs-8">
-            <ul className="pagination hidden-xs pull-right">
-            </ul>
-            <ul className="pagination visible-xs pull-right">
-              <li><a href="#">«</a></li>
-              <li><a href="#">»</a></li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
     );

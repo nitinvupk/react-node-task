@@ -1,6 +1,6 @@
 import React from "react";
 import api from  "../utility/query"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './styles/register.css';
 
 class Register extends React.Component {
@@ -15,7 +15,8 @@ class Register extends React.Component {
     let email = this.refs.email.value;
     let password = this.refs.password.value;
     let role = this.refs.roles.value;
-    const user = await api.create("/users/register", { name, email, password, role })
+    const token = true;
+    const user = await api.create("/users/register", { name, email, password, role, token })
     this.props.currentUser(user);
     if(user && user.auth){
       window.localStorage.clear();
@@ -29,7 +30,7 @@ class Register extends React.Component {
       <div>
         <div className="container">
           <h1>Register</h1>
-          <p>Please fill in this form to create an account.</p>
+          <h4>Please fill in this form to create an account.</h4>
 
           {!this.props.user.message ? "" :<p className="text-danger">{this.props.user.message}</p>}
           <label><b>Name</b></label>
@@ -45,15 +46,9 @@ class Register extends React.Component {
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
-          <hr/>
-          <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-
           <button type="submit" onClick={this.handleSubmit} className="registerbtn">Register</button>
         </div>
-        
-        <div className="container signin">
-          <p>Already have an account? <Link to="/login">Sign in</Link></p>
-        </div>
+        <h4>Already have an account? <Link className="text-info" to="/login">Sign in</Link></h4><br/>
       </div>
     );
   }

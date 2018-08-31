@@ -35,9 +35,7 @@ class Login extends React.Component {
         <input type="password" ref="password" placeholder="Enter Password" name="psw" required/>
 
         <button type="submit" onClick={this.handleSubmit} >Login</button>
-        <div className="container signin">
-        <p>Don't have an account? <a href="/register">Sign up</a></p>
-        </div>
+        <h4>Don't have an account? <a className="text-info" href="/register">Sign up</a></h4>
       </div>
     );
   }
