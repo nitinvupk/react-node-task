@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:8000";
+const baseUrl = "https://user-management-task.herokuapp.com";
 
 const get = (url) => {
   return axios.get(`${baseUrl}${url}`,{ headers:{"x-access-token": window.localStorage.getItem("token")}})
